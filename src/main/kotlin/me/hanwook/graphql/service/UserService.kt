@@ -16,11 +16,13 @@ class UserService(val userRepository: UserRepository) {
     fun createUser(name: String?, gender: Gender?) =
         userRepository.save(User(name = name, gender = gender))
 
-    fun updateUser(id: Long, name: String?, gender: Gender?) {
+    fun updateUser(id: Long, name: String?, gender: Gender?): User {
         val user = userRepository.findById(id)
             .orElseThrow { throw IllegalArgumentException() }
 
         user.update(name, gender)
+
+        return user
     }
 
     fun deleteUser(id: Long) = userRepository.deleteById(id)
