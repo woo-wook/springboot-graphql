@@ -25,3 +25,10 @@ spring:
     url: jdbc:h2:mem:springboot-graphql
     username: sa
     password:
+
+  # graphql
+  graphql:
+    graphiql:
+      enabled: true
+
+
