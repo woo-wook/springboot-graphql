@@ -2,6 +2,10 @@ enum Gender {
     MALE, FEMALE
 }
 
+enum UserFavoriteType {
+    GAME, MOVIE, ETC
+}
+
 type UserListResult {
     id: ID!
     name: String
@@ -11,6 +15,11 @@ type UserResult {
     id: ID!
     name: String
     gender: Gender
+    userFavorites: [UserFavoriteResult]
+}
+
+type UserFavoriteResult {
+    favoriteType: UserFavoriteType
 }
 
 type UserDeleteResult {
@@ -23,7 +32,7 @@ type Query {
 }
 
 type Mutation {
-    createUser(name: String!, gender: Gender!): UserResult
+    createUser(name: String!, gender: Gender!, favorites: [UserFavoriteType!]): UserResult
     updateUser(id: ID!, name: String!, gender: Gender!): UserResult
     deleteUser(id: ID!): UserDeleteResult
 }

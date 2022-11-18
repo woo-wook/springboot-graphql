@@ -2,11 +2,14 @@ package me.hanwook.graphql.service
 
 import me.hanwook.graphql.domain.Gender
 import me.hanwook.graphql.domain.User
+import me.hanwook.graphql.domain.UserFavorite
+import me.hanwook.graphql.domain.UserFavoriteType
 import me.hanwook.graphql.dto.result.UserDeleteResult
 import me.hanwook.graphql.dto.result.UserListResult
 import me.hanwook.graphql.dto.result.UserResult
 import me.hanwook.graphql.repository.UserRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class UserService(val userRepository: UserRepository) {
@@ -23,11 +26,18 @@ class UserService(val userRepository: UserRepository) {
                 .orElseThrow { throw IllegalArgumentException() }
         )
 
-    fun createUser(name: String?, gender: Gender?) =
-        UserResult.from(
-            userRepository.save(User(name = name, gender = gender))
-        )
+    @Transactional
+    fun createUser(name: String?, gender: Gender?, favorites: List<UserFavoriteType>?): UserResult {
+        val user = userRepository.save(User(name = name, gender = gender))
 
+        if(favorites?.isNotEmpty() == true) {
+            favorites.forEach { UserFavorite(user = user, favoriteType = it)  }
+        }
+
+        return UserResult.from(user)
+    }
+
+    @Transactional
     fun updateUser(id: Long, name: String?, gender: Gender?): UserResult {
         val user = userRepository.findById(id)
             .orElseThrow { throw IllegalArgumentException() }
@@ -37,6 +47,7 @@ class UserService(val userRepository: UserRepository) {
         return UserResult.from(user)
     }
 
+    @Transactional
     fun deleteUser(id: Long): UserDeleteResult {
         userRepository.deleteById(id)
         return UserDeleteResult.from(id)

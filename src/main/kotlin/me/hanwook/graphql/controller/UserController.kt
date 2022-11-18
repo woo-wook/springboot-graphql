@@ -20,7 +20,7 @@ class UserController(val userService: UserService) {
 
     @MutationMapping
     fun createUser(@Arguments param: UserCreateParam) =
-        userService.createUser(param.name, param.gender)
+        userService.createUser(param.name, param.gender, param.favorites)
 
     @MutationMapping
     fun updateUser(@Argument("id") id: Long, @Argument("name") name: String?, @Argument("gender") gender: Gender?) =

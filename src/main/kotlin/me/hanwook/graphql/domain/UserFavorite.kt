@@ -18,4 +18,8 @@ class UserFavorite(
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     val user: User
-)
+) {
+    init {
+        user.favorites.add(this);
+    }
+}
