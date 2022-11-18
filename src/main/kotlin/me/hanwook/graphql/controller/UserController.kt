@@ -12,6 +12,8 @@ class UserController(val userService: UserService) {
 
     @QueryMapping
     fun getUsers() = userService.getUsers()
+    @QueryMapping
+    fun getUser(@Argument("id") id: Long) = userService.getUser(id)
 
     @MutationMapping
     fun createUser(@Argument("name") name: String?, @Argument("gender") gender: Gender?) =
@@ -20,4 +22,7 @@ class UserController(val userService: UserService) {
     @MutationMapping
     fun updateUser(@Argument("id") id: Long, @Argument("name") name: String?, @Argument("gender") gender: Gender?) =
         userService.updateUser(id, name, gender)
+
+    @MutationMapping
+    fun deleteUser(@Argument("id") id: Long) = userService.deleteUser(id)
 }

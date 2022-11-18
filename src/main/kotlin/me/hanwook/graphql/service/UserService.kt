@@ -2,6 +2,7 @@ package me.hanwook.graphql.service
 
 import me.hanwook.graphql.domain.Gender
 import me.hanwook.graphql.domain.User
+import me.hanwook.graphql.dto.result.UserDeleteResult
 import me.hanwook.graphql.repository.UserRepository
 import org.springframework.stereotype.Service
 
@@ -25,5 +26,8 @@ class UserService(val userRepository: UserRepository) {
         return user
     }
 
-    fun deleteUser(id: Long) = userRepository.deleteById(id)
+    fun deleteUser(id: Long): UserDeleteResult {
+        userRepository.deleteById(id)
+        return UserDeleteResult.from(id)
+    }
 }

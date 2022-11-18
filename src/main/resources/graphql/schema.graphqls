@@ -8,11 +8,17 @@ type User {
     gender: Gender!
 }
 
+type UserDeleteResult {
+    id: ID!
+}
+
 type Query {
     getUsers: [User]
+    getUser(id: ID!): User
 }
 
 type Mutation {
     createUser(name: String!, gender: Gender!): User
-    updateUser(id: ID, name: String!, gender: Gender!): User
+    updateUser(id: ID!, name: String!, gender: Gender!): User
+    deleteUser(id: ID!): UserDeleteResult
 }
