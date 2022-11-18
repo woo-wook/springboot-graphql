@@ -2,10 +2,15 @@ enum Gender {
     MALE, FEMALE
 }
 
-type User {
+type UserListResult {
     id: ID!
-    name: String!
-    gender: Gender!
+    name: String
+}
+
+type UserResult {
+    id: ID!
+    name: String
+    gender: Gender
 }
 
 type UserDeleteResult {
@@ -13,12 +18,12 @@ type UserDeleteResult {
 }
 
 type Query {
-    getUsers: [User]
-    getUser(id: ID!): User
+    getUsers: [UserListResult]
+    getUser(id: ID!): UserResult
 }
 
 type Mutation {
-    createUser(name: String!, gender: Gender!): User
-    updateUser(id: ID!, name: String!, gender: Gender!): User
+    createUser(name: String!, gender: Gender!): UserResult
+    updateUser(id: ID!, name: String!, gender: Gender!): UserResult
     deleteUser(id: ID!): UserDeleteResult
 }
