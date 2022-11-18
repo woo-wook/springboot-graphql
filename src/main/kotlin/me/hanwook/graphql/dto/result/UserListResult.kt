@@ -1,6 +1,5 @@
 package me.hanwook.graphql.dto.result
 
-import me.hanwook.graphql.domain.Gender
 import me.hanwook.graphql.domain.User
 
 /**
