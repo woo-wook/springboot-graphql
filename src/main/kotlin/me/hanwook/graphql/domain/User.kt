@@ -16,8 +16,11 @@ class User(
 
     @Column(length = 6)
     @Enumerated(STRING)
-    var gender: Gender? = null
+    var gender: Gender? = null,
 ) {
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val favorites: MutableList<UserFavorite> = arrayListOf()
+
     fun update(name: String?, gender: Gender?) {
         this.name = name
         this.gender = gender
