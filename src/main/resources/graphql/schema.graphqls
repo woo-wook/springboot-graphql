@@ -36,3 +36,7 @@ type Mutation {
     updateUser(id: ID!, name: String!, gender: Gender!): UserResult
     deleteUser(id: ID!): UserDeleteResult
 }
+
+type Subscription {
+    subscribeUsers: [UserListResult]
+}

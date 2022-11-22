@@ -2,12 +2,12 @@ package me.hanwook.graphql.controller
 
 import me.hanwook.graphql.domain.Gender
 import me.hanwook.graphql.dto.param.UserCreateParam
+import me.hanwook.graphql.dto.result.UserListResult
 import me.hanwook.graphql.service.UserService
-import org.springframework.graphql.data.method.annotation.Argument
-import org.springframework.graphql.data.method.annotation.Arguments
-import org.springframework.graphql.data.method.annotation.MutationMapping
-import org.springframework.graphql.data.method.annotation.QueryMapping
+import org.springframework.graphql.data.method.annotation.*
 import org.springframework.stereotype.Controller
+import reactor.core.publisher.Flux
+import java.time.Duration
 
 @Controller
 class UserController(val userService: UserService) {
@@ -28,4 +28,7 @@ class UserController(val userService: UserService) {
 
     @MutationMapping
     fun deleteUser(@Argument("id") id: Long) = userService.deleteUser(id)
+
+    @SubscriptionMapping
+    fun subscribeUsers(): Flux<List<UserListResult>> = Flux.interval(Duration.ofSeconds(2)).map { userService.getUsers() }
 }
