@@ -14,12 +14,7 @@
 
     client.subscribe(
         {
-            query: 'subscription {\n' +
-                '    subscribeUsers {' +
-                '        id\n' +
-                '        name\n'+
-                '    }\n' +
-                '}',
+            query: 'subscription { subscribeUsers { id name } }',
         },
         {
             next: (data) => {
