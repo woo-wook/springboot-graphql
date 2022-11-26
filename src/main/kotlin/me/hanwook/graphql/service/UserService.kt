@@ -30,7 +30,7 @@ class UserService(val userRepository: UserRepository) {
     fun createUser(name: String?, gender: Gender?, favorites: List<UserFavoriteType>?): UserResult {
         val user = userRepository.save(User(name = name, gender = gender))
 
-        if(favorites?.isNotEmpty() == true) {
+        if(!favorites.isNullOrEmpty()) {
             favorites.forEach { UserFavorite(user = user, favoriteType = it)  }
         }
 
