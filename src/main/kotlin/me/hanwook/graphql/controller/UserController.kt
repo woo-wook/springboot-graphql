@@ -3,7 +3,9 @@ package me.hanwook.graphql.controller
 import me.hanwook.graphql.domain.Gender
 import me.hanwook.graphql.dto.param.UserCreateParam
 import me.hanwook.graphql.dto.result.UserListResult
+import me.hanwook.graphql.dto.result.UserResult
 import me.hanwook.graphql.service.UserService
+import org.slf4j.LoggerFactory
 import org.springframework.graphql.data.method.annotation.*
 import org.springframework.stereotype.Controller
 import reactor.core.publisher.Flux
@@ -12,11 +14,19 @@ import java.time.Duration
 @Controller
 class UserController(val userService: UserService) {
 
-    @QueryMapping
-    fun getUsers() = userService.getUsers()
+    private val log = LoggerFactory.getLogger(javaClass)
 
     @QueryMapping
-    fun getUser(@Argument("id") id: Long) = userService.getUser(id)
+    fun getUsers(): List<UserListResult> {
+        log.info("UserController :: getUsers")
+        return userService.getUsers()
+    }
+
+    @QueryMapping
+    fun getUser(@Argument("id") id: Long): UserResult {
+        log.info("UserController :: getUsers")
+        return userService.getUser(id)
+    }
 
     @MutationMapping
     fun createUser(@Arguments param: UserCreateParam) =
