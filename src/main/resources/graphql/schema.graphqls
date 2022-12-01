@@ -1,18 +1,30 @@
+" 성별 "
 enum Gender {
-    MALE, FEMALE
+    " 남성 "
+    MALE,
+
+    " 여성 "
+    FEMALE
 }
 
 enum UserFavoriteType {
     GAME, MOVIE, ETC
 }
 
+" 사용자 조회 결과 (목록형) "
 type UserListResult {
     id: ID!
+
+    " 이름 "
     name: String
+    gender: Gender
 }
 
+" 사용자 조회 결과 "
 type UserResult {
     id: ID!
+
+    " 이름 "
     name: String
     gender: Gender
     userFavorites: [UserFavoriteResult]
@@ -27,16 +39,26 @@ type UserDeleteResult {
 }
 
 type Query {
+    " 사용자 목록 조회 "
     getUsers: [UserListResult]
+
+    " 사용자 조회 "
     getUser(id: ID!): UserResult
 }
 
 type Mutation {
+    " 사용자 생성 "
     createUser(name: String!, gender: Gender!, favorites: [UserFavoriteType!]): UserResult
+
+    " 사용자 수정 "
     updateUser(id: ID!, name: String!, gender: Gender!): UserResult
+
+    " 사용자 제거 "
     deleteUser(id: ID!): UserDeleteResult
 }
 
 type Subscription {
+
+    " 사용자 목록 구독 "
     subscribeUsers: [UserListResult]
 }

@@ -17,14 +17,19 @@ class UserService(val userRepository: UserRepository) {
     fun getUsers(): List<UserListResult> {
         val results = userRepository.findAll()
 
+        Thread.sleep(3000)
+
         return results.map(UserListResult::from)
     }
 
-    fun getUser(id: Long) =
-        UserResult.from(
-            userRepository.findById(id)
+    fun getUser(id: Long): UserResult  {
+        Thread.sleep(5000)
+
+        return UserResult.from(
+            userRepository.findUser(id)
                 .orElseThrow { throw IllegalArgumentException() }
         )
+    }
 
     @Transactional
     fun createUser(name: String?, gender: Gender?, favorites: List<UserFavoriteType>?): UserResult {

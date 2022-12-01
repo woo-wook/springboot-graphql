@@ -10,6 +10,7 @@ import org.springframework.graphql.data.method.annotation.*
 import org.springframework.stereotype.Controller
 import reactor.core.publisher.Flux
 import java.time.Duration
+import java.util.concurrent.CompletableFuture
 
 @Controller
 class UserController(val userService: UserService) {
@@ -17,15 +18,15 @@ class UserController(val userService: UserService) {
     private val log = LoggerFactory.getLogger(javaClass)
 
     @QueryMapping
-    fun getUsers(): List<UserListResult> {
+    fun getUsers(): CompletableFuture<List<UserListResult>> {
         log.info("UserController :: getUsers")
-        return userService.getUsers()
+        return CompletableFuture.supplyAsync { userService.getUsers() }
     }
 
     @QueryMapping
-    fun getUser(@Argument("id") id: Long): UserResult {
-        log.info("UserController :: getUsers")
-        return userService.getUser(id)
+    fun getUser(@Argument("id") id: Long): CompletableFuture<UserResult> {
+        log.info("UserController :: getUser")
+        return CompletableFuture.supplyAsync { userService.getUser(id) }
     }
 
     @MutationMapping
