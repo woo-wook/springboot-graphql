@@ -4,9 +4,9 @@
     <meta charset="utf-8"/>
     <title>GraphQL over WebSocket</title>
     <script type="text/javascript" src="https://unpkg.com/graphql-ws/umd/graphql-ws.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 </head>
 <body>
-<p>Check the console for subscription messages.</p>
 <script type="text/javascript">
     const client = graphqlWs.createClient({
         url: 'ws://localhost:9010/graphql',
@@ -14,11 +14,28 @@
 
     client.subscribe(
         {
-            query: 'subscription { subscribeUsers { id name } }',
+            query: 'subscription { subscribeUsers { id name gender } }',
         },
         {
-            next: (data) => {
-                console.log("Subscription data:", data);
+            next: (response) => {
+                console.log("Subscription data:", response);
+
+                let html = "";
+                const _users = response.data.subscribeUsers;
+
+                for(let i in _users) {
+                    const _user = _users[i];
+
+                    html += `
+                        <tr>
+                            <td>${_user.id}</td>
+                            <td>${_user.name}</td>
+                            <td>${_user.gender}</td>
+                        </tr>
+                    `;
+                }
+
+                $("#user_data_area").html(html);
             },
             error: (error) => {
                 console.log("Subscription error:", error)
@@ -29,5 +46,17 @@
         },
     );
 </script>
+<table style="border ">
+    <thaed>
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>gender</th>
+        </tr>
+    </thaed>
+    <tbody id="user_data_area">
+
+    </tbody>
+</table>
 </body>
 </html>
