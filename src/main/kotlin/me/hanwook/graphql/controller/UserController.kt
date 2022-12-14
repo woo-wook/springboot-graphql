@@ -18,28 +18,28 @@ class UserController(val userService: UserService) {
     private val log = LoggerFactory.getLogger(javaClass)
 
     @QueryMapping
-    fun getUsers(): CompletableFuture<List<UserListResult>> {
+    fun getUsers(): List<UserListResult> {
         log.info("UserController :: getUsers")
-        return CompletableFuture.supplyAsync { userService.getUsers() }
+        return userService.getUsers()
     }
 
     @QueryMapping
-    fun getUser(@Argument("id") id: Long): CompletableFuture<UserResult> {
+    fun getUser(@Argument("id") id: Long): UserResult {
         log.info("UserController :: getUser")
-        return CompletableFuture.supplyAsync { userService.getUser(id) }
+        return userService.getUser(id)
     }
 
     @MutationMapping
-    fun createUser(@Arguments param: UserCreateParam) =
-        userService.createUser(param.name, param.gender, param.favorites)
+    fun createUser(@Arguments param: UserCreateParam) = userService.createUser(param.name, param.gender, param.favorites)
 
     @MutationMapping
-    fun updateUser(@Argument("id") id: Long, @Argument("name") name: String?, @Argument("gender") gender: Gender?) =
-        userService.updateUser(id, name, gender)
+    fun updateUser(@Argument("id") id: Long, @Argument("name") name: String?, @Argument("gender") gender: Gender?) = userService.updateUser(id, name, gender)
 
     @MutationMapping
     fun deleteUser(@Argument("id") id: Long) = userService.deleteUser(id)
 
     @SubscriptionMapping
-    fun subscribeUsers(): Flux<List<UserListResult>> = Flux.interval(Duration.ofSeconds(2)).map { userService.getUsers() }
+    fun subscribeUsers(): Flux<List<UserListResult>> =
+        Flux.interval(Duration.ofSeconds(2))
+            .map { userService.getUsers() }
 }

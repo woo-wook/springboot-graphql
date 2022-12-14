@@ -10,7 +10,7 @@ interface UserRepository: JpaRepository<User, Long> {
         select u
           from User u 
           left join fetch u.favorites
-        where u.id = :id
+         where u.id = :id
     """)
     fun findUser(id: Long): Optional<User>
 }

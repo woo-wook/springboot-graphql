@@ -25,4 +25,6 @@ class User(
         this.name = name
         this.gender = gender
     }
+
+    internal fun addFavorite(favorite: UserFavorite) = this.favorites.add(favorite)
 }

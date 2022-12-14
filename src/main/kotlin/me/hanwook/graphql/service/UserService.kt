@@ -15,15 +15,15 @@ import org.springframework.transaction.annotation.Transactional
 class UserService(val userRepository: UserRepository) {
 
     fun getUsers(): List<UserListResult> {
-        val results = userRepository.findAll()
+        //Thread.sleep(3000)
 
-        Thread.sleep(3000)
+        val results = userRepository.findAll()
 
         return results.map(UserListResult::from)
     }
 
-    fun getUser(id: Long): UserResult  {
-        Thread.sleep(5000)
+    fun getUser(id: Long): UserResult {
+        //Thread.sleep(5000)
 
         return UserResult.from(
             userRepository.findUser(id)
