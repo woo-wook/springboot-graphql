@@ -23,10 +23,10 @@ class InitDataConfig(
         val genders = Gender.values()
         val favoriteTypes = UserFavoriteType.values()
 
-        for(i in 1..30) {
+        for (i in 1..30) {
             val user = User(name = names.random(), gender = genders[random.nextInt(genders.size)])
 
-            for(j in 0 .. random.nextInt(favoriteTypes.size)) {
+            for (j in 0..random.nextInt(favoriteTypes.size)) {
                 UserFavorite(user = user, favoriteType = favoriteTypes[j])
             }
 

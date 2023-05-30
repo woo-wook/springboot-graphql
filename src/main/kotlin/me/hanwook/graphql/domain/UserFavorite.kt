@@ -1,6 +1,5 @@
 package me.hanwook.graphql.domain
 
-import org.springframework.util.Assert
 import javax.persistence.*
 import javax.persistence.EnumType.STRING
 import javax.persistence.FetchType.LAZY

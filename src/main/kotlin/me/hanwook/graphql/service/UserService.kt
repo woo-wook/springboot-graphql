@@ -14,22 +14,19 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class UserService(val userRepository: UserRepository) {
 
+    @Transactional(readOnly = true)
     fun getUsers(): List<UserListResult> {
-        //Thread.sleep(3000)
-
         val results = userRepository.findAll()
 
         return results.map(UserListResult::from)
     }
 
-    fun getUser(id: Long): UserResult {
-        //Thread.sleep(5000)
-
-        return UserResult.from(
+    @Transactional(readOnly = true)
+    fun getUser(id: Long): UserResult =
+        UserResult.from(
             userRepository.findUser(id)
                 .orElseThrow { throw IllegalArgumentException() }
         )
-    }
 
     @Transactional
     fun createUser(name: String?, gender: Gender?, favorites: List<UserFavoriteType>?): UserResult {
